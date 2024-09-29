@@ -1,7 +1,9 @@
-from itertools import count
+from dotenv import dotenv_values
 import time
 import requests
 from bs4 import BeautifulSoup
+
+env = dotenv_values(".env")
 
 start_time = time.time()
 
@@ -12,12 +14,10 @@ geoId_Spain = '105646813'
 
 link = 'https://www.linkedin.com/jobs/search/'
 keywords = 'keywords=' + keyword_search + '&geoId=' + geoId_Spain
-user = 'mo6368745@gmail.com'
-passwd = 'Mahupa81431'
 
 # Don't need auth in this case
 # r = requests.get(link, auth=(user, pass))
-res = requests.get(link, params=keywords, auth=(user, passwd))
+res = requests.get(link, params=keywords, auth=(env['USER'], env['PASSWD']))
 
 soup = BeautifulSoup(res.text, 'lxml')
 
